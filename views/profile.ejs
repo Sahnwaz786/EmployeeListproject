@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/stylesheets/style2.css">
+  <title>Employee Profile</title>
+</head>
+
+<body class="bg-zinc-200">
+  <div class="flex justify-between p-2 bg-zinc-800 text-white">
+
+    <div id="nav1">
+      <h4><a href="/profile">Home</a></h4>
+      <h4>Employee List</h4>
+    </div>
+    <div id="nav2">
+      <h4 class="text-white"><%=user.username%></h4>
+      <h4><a href="/logout">Logout</a></h4>
+    </div>
+
+  </div>
+
+  <h3 class="text-center mt-4">Employee List</h3>
+  <div class="flex justify-end gap-10 px-5">
+    <h5 class="mt-2">Total Count: <%= users.length %></h5>
+    <a class="text-white text-sm font-semibold px-3 py-2 bg-green-500 rounded-md" href="/createuser">Create Employee</a>
+  </div>
+
+  <div class="overflow-x-auto px-5">
+    <table class="min-w-full bg-white">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-6 text-left">Unique Id</th>
+          <th class="py-3 px-6 text-left">Image</th>
+          <th class="py-3 px-6 text-left">Name</th>
+          <th class="py-3 px-6 text-left">Email</th>
+          <th class="py-3 px-6 text-left">Mobile Number</th>
+          <th class="py-3 px-6 text-left">Designation</th>
+          <th class="py-3 px-6 text-left">Gender</th>
+          <th class="py-3 px-6 text-left">Course</th>
+          <th class="py-3 px-6 text-left">Created Date</th>
+          <th class="py-3 px-6 text-left">Action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm font-light">
+        <% if (users && users.length > 0) { %>
+        <% users.forEach(function(e) { %>
+        <tr class="border-b border-gray-200 hover:bg-gray-100">
+          <td class="py-3 px-6"><%= e.uniqueId %></td>
+          <td class="py-3 px-6"><img src="/images/<%= e.image %>" height="50" alt="Employee Image" /></td>
+          <td class="py-3 px-6"><%= e.name %></td>
+          <td class="py-3 px-6"><%= e.email %></td>
+          <td class="py-3 px-6"><%= e.mobile %></td>
+          <td class="py-3 px-6"><%= e.designation %></td>
+          <td class="py-3 px-6"><%= e.gender %></td>
+          <td class="py-3 px-6"><%= e.courses %></td>
+          <td class="py-3 px-6"><%= e.hireDate.toLocaleDateString() %></td>
+          <td>
+            <div class=" flex flex-col gap-2 ">
+              <a class="py-1 bg-yellow-500  rounded-md text-center text-white text-base font-semibold" href="/edit/<%= e.uniqueId %>">Edit</a>
+              <a class=" py-1 text-center bg-red-500 rounded-md  text-white text-base font-semibold" href="/delete/<%= e.uniqueId %>">Delete</a>
+            </div>
+          </td>
+
+        </tr>
+        <% }); %>
+        <% } else { %>
+        <tr>
+          <td colspan="10" class="text-center py-3">No employees found.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="min-h-screen w-full flex justify-center bg-zinc-500">
+
+    <div class="h-screen w-[30%] bg-orange-500 rounded-lg text-white    p-10">
+      <h2 class="text-3xl mb-2 ">Create account</h2>
+
+      <form action="/createuser" method="post" enctype="multipart/form-data">
+
+        <label for="name">Name:</label>
+        <input class="px-2  mb-3  bg-transparent border rounded-md border-zinc-500  " type="text" placeholder="Name" name="name">
+        <br>
+        <label for="email">Email:</label>
+        <input class="px-2  mb-3 bg-transparent border rounded-md border-zinc-500  " type="text" placeholder="Name" name="email"> <br>
+
+        <label for="mobile No">Mobile No:</label>
+        <input class="px-2  mb-3 bg-transparent border rounded-md border-zinc-500  " type="number" placeholder="Mobile No" name="mobile">
+        <br>
+        <label for="designation">Designation:</label>
+        <select class="px-2  mb-3 bg-transparent border rounded-md border-zinc-500  " name="designation">
+          <option class="bg-transparent text-black" value="hr">HR</option>
+          <option class="bg-transparent text-black" value="manager">Manager</option>
+          <option class="bg-transparent text-black" value="sales">Sales</option>
+        </select>
+        <br>
+
+        <label>Gender:</label>
+        <input class="mb-2" type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+        <br>
+
+        <label>Courses:</label><br>
+        <input type="checkbox" id="mca" name="course[]" value="MCA">
+        <label for="mca">MCA</label><br>
+        <input type="checkbox" id="bca" name="course[]" value="BCA">
+        <label for="bca">BCA</label><br>
+        <input class="mb-3" type="checkbox" id="bsc" name="course[]" value="BSC">
+        <label for="bsc">BSC</label><br>
+
+
+        <br>
+        <label for="fileUpload">Upload File:</label>
+        <input class="mt-1" type="file" id="fileUpload" name="fileUpload"><br><br>
+
+        <input class="px-2 py-1 bg-blue-500 border rounded-md text-lg mb-4 ml-2" type="submit" value="Submit" id="">
+      </form>
+
+    </div>
+  </div>
+</body>
+
+</html>
