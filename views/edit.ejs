@@ -9,11 +9,11 @@
 </head>
 
 <body>
-  <div class="min-h-screen w-full flex justify-center bg-zinc-500">
-    <div class="h-screen w-[30%] bg-orange-500 rounded-lg text-white p-10">
-      <h2 class="text-3xl mb-2">Edit User</h2>
+  <div class="min-h-screen w-full flex justify-center bg-slate-600 p-5">
+    <div class="card1  w-[30%] bg-gray-700 rounded-lg text-white shadow-slate-200 shadow-lg p-8">
+      <h2 class="text-3xl mb-2 text-yellow-300 text-center font-semibold underline ">Edit User</h2>
 
-      <form action="/edit/<%= user._id %>" method="post">
+      <form class="mt-4" action="/edit/<%= user._id %>" method="post">
         <label for="name">Name:</label>
         <input class="px-2 mb-3 bg-transparent border rounded-md border-zinc-500" type="text" name="name" value="<%= user.name %>" required>
         <br>
@@ -27,7 +27,7 @@
         <br>
 
         <label for="designation">Designation:</label>
-        <select class="px-2 mb-3 bg-transparent border rounded-md border-zinc-500" name="designation">
+        <select class="px-2 mb-3 bg-slate-600 border rounded-md border-zinc-500" name="designation">
           <option value="hr" <%= user.designation === 'hr' ? 'selected' : '' %>>HR</option>
           <option value="manager" <%= user.designation === 'manager' ? 'selected' : '' %>>Manager</option>
           <option value="sales" <%= user.designation === 'sales' ? 'selected' : '' %>>Sales</option>
@@ -50,8 +50,11 @@
         <label for="bsc">BSC</label><br>
 
 
-        <label for="fileUpload">Upload File:</label>
-        <input class="mt-1" type="file" name="fileUpload" value="src=" /images/<%= user.fileUpload %>" class="inline w-20 h-20 object-cover rounded-full mb-2"><br><br>
+        <label for="fileUpload">Upload New Image:</label><br>
+        <% if (user.fileUpload) { %>
+        <img src="/images/<%= user.fileUpload %>" alt="Current File" class="inline w-20 h-20 object-cover rounded-full mb-2"><br>
+        <% } %>
+        <input class="mt-1 bg-transparent text-white" type="file" name="fileUpload" value="img src=/images/<%= user.fileUpload %>"><br><br>
 
 
         <input class="px-2 py-1 bg-blue-500 border rounded-md text-lg mb-4 ml-2" type="submit" value="Update">

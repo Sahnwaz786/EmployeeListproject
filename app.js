@@ -44,14 +44,6 @@ app.get("/login", (req, res) => {
   res.render("index");
 });
 
-app.get("/employlist", isLoggedIn, (req, res) => {
-  res.render("employeelist");
-});
-
-app.get("/signup", (req, res) => {
-  res.render("index");
-});
-
 app.post("/login", async (req, res) => {
   let user = await Usermodel.findOne({ username: req.body.username });
   if (!user) return res.send("something went wrong");
@@ -70,7 +62,6 @@ app.post("/login", async (req, res) => {
 app.get("/logout", (req, res) => {
   res.cookie("token", "");
   res.redirect("/");
-  console.log("you have loggedout");
 });
 
 function isLoggedIn(req, res, next) {
@@ -130,37 +121,18 @@ app.get("/edit/:id", isLoggedIn, async (req, res) => {
   }
 });
 
-// Route to handle the update form submission
-// app.post("/edit/:id", isLoggedIn, async (req, res) => {
-//   try {
-//     const { name, email, mobile, designation, gender, courses, fileUpload } =
-//       req.body;
-//     const updated = await employee.findByIdAndUpdate(req.params.id, {
-//       name,
-//       email,
-//       mobile,
-//       designation,
-//       gender,
-//       courses,
-//       fileUpload,
-//     });
-//     await updated.save();
-//     res.redirect("/profile");
-//   } catch (error) {
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
+const uploads = require("./utils/multer").single("fileUpload");
 
 app.post("/edit/:id", isLoggedIn, (req, res) => {
-  upload(req, res, async function (err) {
+  uploads(req, res, async function (err) {
     if (err) {
       return res.status(500).send("Error uploading file");
     }
 
     try {
-      const { name, email, mobile, designation, gender, courses } = req.body;
+      const { name, email, mobile, designation, gender, courses} =
+        req.body;
 
-      // Prepare the updated data
       const updatedData = {
         name,
         email,
@@ -168,16 +140,14 @@ app.post("/edit/:id", isLoggedIn, (req, res) => {
         designation,
         gender,
         courses,
+        
       };
 
-      // If a new file was uploaded, update the fileUpload field
       if (req.file) {
-        updatedData.fileUpload = req.file.filename; // Multer saves the uploaded file's name here
+        updatedData.fileUpload = req.file.filename;
       }
 
-      // Update the employee data in the database
       await employee.findByIdAndUpdate(req.params.id, updatedData);
-
       res.redirect("/profile");
     } catch (error) {
       console.error(error);
@@ -186,7 +156,6 @@ app.post("/edit/:id", isLoggedIn, (req, res) => {
   });
 });
 
-// Route to handle user deletion
 app.get("/delete/:id", isLoggedIn, async (req, res) => {
   try {
     await employee.findByIdAndDelete({ _id: req.params.id });
