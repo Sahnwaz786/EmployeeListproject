@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
+const { v4: uuidv4 } = require("uuid");
 app.set("view engine", "ejs");
 app.use(express.json());
 const Usermodel = require("./models/user");
@@ -100,6 +101,7 @@ app.post("/createuser", function (req, res, next) {
     if (err) throw err;
     try {
       const Media = new employee({
+        Unique: req.body.unique,
         name: req.body.name,
         email: req.body.email,
         mobile: req.body.mobile,
@@ -115,6 +117,109 @@ app.post("/createuser", function (req, res, next) {
       res.send(error);
     }
   });
+});
+
+// Route to render the edit user form
+app.get("/edit/:id", isLoggedIn, async (req, res) => {
+  try {
+    const user = await employee.findById(req.params.id);
+    if (!user) return res.status(404).send("User not found");
+    res.render("edit", { user });
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route to handle the update form submission
+// app.post("/edit/:id", isLoggedIn, async (req, res) => {
+//   try {
+//     const { name, email, mobile, designation, gender, courses, fileUpload } =
+//       req.body;
+//     const updated = await employee.findByIdAndUpdate(req.params.id, {
+//       name,
+//       email,
+//       mobile,
+//       designation,
+//       gender,
+//       courses,
+//       fileUpload,
+//     });
+//     await updated.save();
+//     res.redirect("/profile");
+//   } catch (error) {
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+app.post("/edit/:id", isLoggedIn, (req, res) => {
+  upload(req, res, async function (err) {
+    if (err) {
+      return res.status(500).send("Error uploading file");
+    }
+
+    try {
+      const { name, email, mobile, designation, gender, courses } = req.body;
+
+      // Prepare the updated data
+      const updatedData = {
+        name,
+        email,
+        mobile,
+        designation,
+        gender,
+        courses,
+      };
+
+      // If a new file was uploaded, update the fileUpload field
+      if (req.file) {
+        updatedData.fileUpload = req.file.filename; // Multer saves the uploaded file's name here
+      }
+
+      // Update the employee data in the database
+      await employee.findByIdAndUpdate(req.params.id, updatedData);
+
+      res.redirect("/profile");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+});
+
+// Route to handle user deletion
+app.get("/delete/:id", isLoggedIn, async (req, res) => {
+  try {
+    await employee.findByIdAndDelete({ _id: req.params.id });
+    res.redirect("/profile");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/search", isLoggedIn, async (req, res) => {
+  const keyword = req.query.keyword;
+
+  try {
+    let employees;
+
+    if (keyword) {
+      // Fetch employees matching the keyword in their name or email
+      employees = await employee.find({
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { email: { $regex: keyword, $options: "i" } },
+        ],
+      });
+    } else {
+      // If no keyword, fetch all employees
+      employees = await employee.find();
+    }
+
+    const user = await Usermodel.findOne();
+    res.render("profile", { users: employees, user: user });
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.listen(3000);

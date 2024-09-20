@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Edit User</title>
+</head>
+
+<body>
+  <div class="min-h-screen w-full flex justify-center bg-zinc-500">
+    <div class="h-screen w-[30%] bg-orange-500 rounded-lg text-white p-10">
+      <h2 class="text-3xl mb-2">Edit User</h2>
+
+      <form action="/edit/<%= user._id %>" method="post">
+        <label for="name">Name:</label>
+        <input class="px-2 mb-3 bg-transparent border rounded-md border-zinc-500" type="text" name="name" value="<%= user.name %>" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input class="px-2 mb-3 bg-transparent border rounded-md border-zinc-500" type="email" name="email" value="<%= user.email %>" required>
+        <br>
+
+        <label for="mobile">Mobile No:</label>
+        <input class="px-2 mb-3 bg-transparent border rounded-md border-zinc-500" type="tel" name="mobile" value="<%= user.mobile %>" required>
+        <br>
+
+        <label for="designation">Designation:</label>
+        <select class="px-2 mb-3 bg-transparent border rounded-md border-zinc-500" name="designation">
+          <option value="hr" <%= user.designation === 'hr' ? 'selected' : '' %>>HR</option>
+          <option value="manager" <%= user.designation === 'manager' ? 'selected' : '' %>>Manager</option>
+          <option value="sales" <%= user.designation === 'sales' ? 'selected' : '' %>>Sales</option>
+        </select>
+        <br>
+
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="male" <%= user.gender === 'male' ? 'checked' : '' %>>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" <%= user.gender === 'female' ? 'checked' : '' %>>
+        <label for="female">Female</label>
+        <br>
+
+        <label>Courses:</label><br>
+        <input type="checkbox" id="mca" name="courses[]" value="MCA" <%= user.courses.includes('MCA') ? 'checked' : '' %>>
+        <label for="mca">MCA</label><br>
+        <input type="checkbox" id="bca" name="courses[]" value="BCA" <%= user.courses.includes('BCA') ? 'checked' : '' %>>
+        <label for="bca">BCA</label><br>
+        <input type="checkbox" id="bsc" name="courses[]" value="BSC" <%= user.courses.includes('BSC') ? 'checked' : '' %>>
+        <label for="bsc">BSC</label><br>
+
+
+        <label for="fileUpload">Upload File:</label>
+        <input class="mt-1" type="file" name="fileUpload" value="src=" /images/<%= user.fileUpload %>" class="inline w-20 h-20 object-cover rounded-full mb-2"><br><br>
+
+
+        <input class="px-2 py-1 bg-blue-500 border rounded-md text-lg mb-4 ml-2" type="submit" value="Update">
+      </form>
+
+
+    </div>
+  </div>
+</body>
+
+</html>
