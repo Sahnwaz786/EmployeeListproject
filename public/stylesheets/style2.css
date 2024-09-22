@@ -55,6 +55,7 @@ label.validation-error {
   display: none;
 }
 #nav {
+  
   display: flex;
   background-color: rgb(157, 0, 255);
   align-items: center;

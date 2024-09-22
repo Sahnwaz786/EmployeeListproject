@@ -9,39 +9,42 @@
   <title>Employee Profile</title>
 </head>
 
-<body class="bg-slate-600 text-white">
-  <div class="flex justify-between p-2 bg-slate-900  text-white">
+<body class="bg-gray-600 text-white">
+  <!-- Navigation Bar -->
+  <div class="flex justify-between items-center px-5 text-xl bg-zinc-800 h-16 text-white">
     <div id="nav1">
-      <h4><a href="/profile">Home</a></h4>
-      <h4>Employee List</h4>
+      <h4><a href="/profile" class="hover:underline">Home</a></h4>
+      <h4 class="">Employee List</h4>
     </div>
     <div id="nav2">
-      <h4 class="text-white"><%=user.username%></h4>
-      <h4><a href="/logout">Logout</a></h4>
+      <h4 class="text-white"><%= user.username %></h4>
+      <h4><a href="/logout" class="hover:underline">Logout</a></h4>
     </div>
   </div>
 
-  <h3 class="text-center mt-4  text-xl font-semibold">Employee List</h3>
+  <!-- Page Title -->
+  <h3 class="text-center  mt-4 text-3xl font-semibold">Employee List</h3>
 
-  <!-- Add a form to handle search functionality -->
+  <!-- Search Bar and Create Button -->
   <div class="flex justify-between gap-10 px-5">
     <form action="/search" method="GET">
-      <div class="flex  w-[130%] items-center gap-6 ">
-        <input class=" rounded-lg px-2  " type="text" name="keyword" placeholder="  Search by name or email" required>
-        <button class="bg-blue-500 px-4 py-1 text-white rounded-md" type="submit">Search</button>
+      <div class="flex w-[140%] items-center gap-8">
+        <input class="rounded-lg px-2 text-black" type="text" name="keyword" placeholder="  Search by name or email" required>
+        <button class="bg-teal-600 hover:bg-emerald-700 px-4 py-2 text-lg text-white rounded-md" type="submit">Search</button>
       </div>
     </form>
 
-    <div class="flex justify-between gap-5 items-center">
-      <h5 class="mt-2">Total Count: <%= users.length %></h5>
-      <a class="text-white text-sm font-semibold px-3 py-2 bg-green-500 rounded-md" href="/createuser">Create Employee</a>
+    <div class="flex justify-between gap-8 items-center">
+      <h5 class="mt-2 text-xl">Total Count: <%= users.length %></h5>
+      <a class="text-white text-lg font-semibold px-3 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-md" href="/createEmployee">Create Employee</a>
     </div>
   </div>
 
+  <!-- Employee Table -->
   <div class="overflow-x-auto px-5">
     <table class="min-w-full bg-white">
       <thead>
-        <tr class="bg-gray-300 text-gray-900 uppercase text-sm leading-normal">
+        <tr class="bg-gray-400 text-gray-900 uppercase text-base leading-normal">
           <th class="py-3 px-6 text-left">Unique Id</th>
           <th class="py-3 px-6 text-left">Image</th>
           <th class="py-3 px-6 text-left">Name</th>
@@ -54,12 +57,12 @@
           <th class="py-3 px-6 text-left">Action</th>
         </tr>
       </thead>
-      <tbody class="text-white bg-gray-700 text-sm font-light">
+      <tbody class="bg-gray-800 text-white text-lg font-light">
         <% if (users && users.length > 0) { %>
         <% users.forEach(function(e) { %>
-        <tr class="border-b border-gray-200 hover:bg-gray-900">
+        <tr class="border-b border-gray-700 hover:bg-gray-900">
           <td class="py-3 px-6"><%= e.Unique %></td>
-          <td class="py-3 px-6"><img src="/images/<%= e.fileUpload %>" style="height:100%; width: 100%;" alt="Employee Image" /></td>
+          <td class="py-3 px-6"><img src="/images/<%= e.fileUpload %>" style="height:62px; width: 70px;border-radius:50%;" alt="Employee Image" /></td>
           <td class="py-3 px-6"><%= e.name %></td>
           <td class="py-3 px-6"><%= e.email %></td>
           <td class="py-3 px-6"><%= e.mobile %></td>
@@ -69,8 +72,8 @@
           <td class="py-3 px-6"><%= e.hireDate.toLocaleDateString() %></td>
           <td>
             <div class="flex flex-col gap-2">
-              <a class="py-1 bg-yellow-500 rounded-md text-center text-white text-base font-semibold" href="/edit/<%= e._id %>">Edit</a>
-              <a class="py-1 text-center bg-red-500 rounded-md text-white text-base font-semibold" href="/delete/<%= e._id %>">Delete</a>
+              <a class="py-2 bg-yellow-500 hover:bg-yellow-600 rounded-md text-center text-white text-base font-semibold" href="/edit/<%= e._id %>">Edit</a>
+              <a class="py-2 text-center bg-red-500 hover:bg-red-600 rounded-md text-white text-base font-semibold" href="/delete/<%= e._id %>">Delete</a>
             </div>
           </td>
         </tr>

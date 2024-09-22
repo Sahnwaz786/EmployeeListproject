@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
+const { timeStamp } = require("console");
 const upload = require("./utils/multer").single("fileUpload");
 
 app.get("/", (req, res) => {
@@ -35,7 +36,7 @@ app.post("/signup", async (req, res) => {
 
       let token = jwt.sign({ email }, "shdadacad");
       res.cookie("token", token);
-      res.redirect("/profile");
+      res.redirect("/login");
     });
   });
 });
@@ -48,7 +49,6 @@ app.post("/login", async (req, res) => {
   let user = await Usermodel.findOne({ username: req.body.username });
   if (!user) return res.send("something went wrong");
   bcrypt.compare(req.body.password, user.password, function (err, result) {
-    // result == true
     if (result === true) {
       let token = jwt.sign({ username: user.username }, "shdadacad");
       res.cookie("token", token);
@@ -83,11 +83,11 @@ app.get("/profile", isLoggedIn, async (req, res) => {
   let employe = await employee.find();
   res.render("profile", { users: employe, user: user });
 });
-app.get("/createuser", (req, res) => {
-  res.render("createUser");
+app.get("/createEmployee", (req, res) => {
+  res.render("createEmployee");
 });
 
-app.post("/createuser", function (req, res, next) {
+app.post("/createEmployee", function (req, res, next) {
   upload(req, res, async function (err) {
     if (err) throw err;
     try {
@@ -100,8 +100,9 @@ app.post("/createuser", function (req, res, next) {
         gender: req.body.gender,
         courses: req.body.courses,
         fileUpload: req.file.filename,
-        hireDate: new Date("2023-09-20"),
+        hireDate: new Date(),
       });
+
       await Media.save();
       res.redirect("/profile");
     } catch (error) {
@@ -110,7 +111,6 @@ app.post("/createuser", function (req, res, next) {
   });
 });
 
-// Route to render the edit user form
 app.get("/edit/:id", isLoggedIn, async (req, res) => {
   try {
     const user = await employee.findById(req.params.id);
@@ -130,8 +130,7 @@ app.post("/edit/:id", isLoggedIn, (req, res) => {
     }
 
     try {
-      const { name, email, mobile, designation, gender, courses} =
-        req.body;
+      const { name, email, mobile, designation, gender, courses } = req.body;
 
       const updatedData = {
         name,
@@ -140,7 +139,6 @@ app.post("/edit/:id", isLoggedIn, (req, res) => {
         designation,
         gender,
         courses,
-        
       };
 
       if (req.file) {

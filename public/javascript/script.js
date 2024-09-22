@@ -1,13 +1,17 @@
-const container = document.getElementById('container');
-const overlayCon = document.getElementById('overlayCon');
-const overlayBtn = document.getElementById('overlayBtn');
-
-overlayBtn.addEventListener('click', () => {
-  container.classList.toggle('right-panel-active');
-  
-  overlayBtn.classList.remove('btnScaled');
-  window.requestAnimationFrame(() => {
-    overlayBtn.classList.add('btnScaled');
-  });
-});
-
+const loginText = document.querySelector(".title-text .login");
+const loginForm = document.querySelector("form.login");
+const loginBtn = document.querySelector("label.login");
+const signupBtn = document.querySelector("label.signup");
+const signupLink = document.querySelector("form .signup-link a");
+signupBtn.onclick = () => {
+  loginForm.style.marginLeft = "-50%";
+  loginText.style.marginLeft = "-50%";
+};
+loginBtn.onclick = () => {
+  loginForm.style.marginLeft = "0%";
+  loginText.style.marginLeft = "0%";
+};
+signupLink.onclick = () => {
+  signupBtn.click();
+  return false;
+};

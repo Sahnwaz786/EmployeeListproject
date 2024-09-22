@@ -1,4 +1,4 @@
-
+ 
 <html lang="en">
 
 </html>
@@ -10,74 +10,66 @@
   <title> Authentication Forms </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <script src="script.js" defer></script>
+  <script src="script.js" ></script>
 </head>
 
 <body>
-  <div class="container" id="container">
-    <div class="form-container sign-up-container">
-      <form action="/signup" method="post">
-        <h1>Create Account</h1>
-        <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span>or use your email for registration</span>
-        <div class="infield">
-          <input type="text" placeholder="User Name" name="username">
-          <label></label>
-        </div>
-        <div class="infield">
-          <input type="email" placeholder="Email" name="email" />
-          <label></label>
-        </div>
-        <div class="infield">
-          <input type="password" placeholder="Password " name="password" />
-          <label></label>
-        </div>
-        <button>Sign Up</button>
-      </form>
+
+  <div class="wrapper">
+  <div class="title-text">
+    <div class="title login">Login Form</div>
+    <div class="title signup">Signup Form</div>
+  </div>
+  <div class="form-container">
+    <div class="slide-controls">
+      <input type="radio" name="slide" id="login" checked>
+      <input type="radio" name="slide" id="signup">
+      <label for="login" class="slide login">Login</label>
+      <label for="signup" class="slide signup">Signup</label>
+      <div class="slider-tab"></div>
     </div>
-    <div class="form-container sign-in-container">
-      <form action="/login" method="post">
-        <h1>Sign in</h1>
-        <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+    <div class="form-inner">
+      <form action="/login" class="login" method="post">
+        <div class="field">
+          <input type="text" placeholder="User Name" name="username" required>
         </div>
-        <span>or use your account</span>
-        <div class="infield">
-          <input type="text" placeholder="Username" name="username" />
-          <label></label>
+        <div class="field">
+          <input type="password" placeholder="Password" name="password" required>
         </div>
-        <div class="infield">
-          <input type="password" placeholder="Password" name="password" />
-          <label></label>
+        <div class="pass-link"><a href="#">Forgot password?</a></div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Login">
         </div>
-        <a href="#" class="forgot">Forgot your password?</a>
-        <button>Sign In</button>
+        <div class="signup-link">Not a member? <a href="">Signup now</a></div>
       </form>
-    </div>
-    <div class="overlay-container" id="overlayCon">
-      <div class="overlay">
-        <div class="overlay-panel overlay-left">
-          <h1>Hello again!</h1>
-          <p>To keep in touch, please login with your credentials</p>
-          <button>Sign In</button>
+      <form action="/signup" class="signup" method="post">
+        <div class="field">
+          <input type="text" placeholder="User Name" name="username" required>
         </div>
-        <div class="overlay-panel overlay-right">
-          <h1>Hello again!</h1>
-          <p>Enter your credentials and start account with us</p>
-          <button id="signUpBtn">Sign Up</button>
+          
+        
+        <div class="field">
+          <input type="text" placeholder="Email Address" name="email" required>
         </div>
-      </div>
-      <button id="overlayBtn"></button>
+        <div class="field">
+          <input type="password" placeholder="Password" name="password" required>
+        </div>
+        
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Signup">
+        </div>
+      </form>
     </div>
   </div>
+</div>
+</div>
 
   <script src="/javascript/script.js"></script>
 </body>
 
-</html>
+</html> 
+
+
+

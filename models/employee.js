@@ -41,9 +41,8 @@ const employeeSchema = new mongoose.Schema(
     // },
     Unique: {
       type: String,
-      default: generateUniqueId, 
-      unique: true 
-      
+      default: generateUniqueId,
+      unique: true,
     },
     courses: {
       type: [String],
